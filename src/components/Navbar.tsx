@@ -6,10 +6,18 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 
+/**
+ * Navigation bar component that handles site navigation and authentication state
+ * Includes responsive design with mobile menu support
+ * @returns {JSX.Element} Navigation bar with authentication controls
+ */
 const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  /**
+   * Toggles the mobile menu state
+   */
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (

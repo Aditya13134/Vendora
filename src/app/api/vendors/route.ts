@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Vendor from '@/models/Vendor';
 
-// GET all vendors with pagination
+/**
+ * Retrieves a paginated list of vendors
+ * @param {NextRequest} request - The incoming HTTP request
+ * @returns {Promise<NextResponse>} JSON response with vendors and pagination data
+ */
 export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
@@ -30,7 +34,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST create a new vendor
+/**
+ * Creates a new vendor
+ * @param {NextRequest} request - The incoming HTTP request with vendor data
+ * @returns {Promise<NextResponse>} JSON response with created vendor or error
+ */
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();

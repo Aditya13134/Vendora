@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * @fileoverview Edit Vendor Page Component
+ * This file contains the implementation of the Edit Vendor page where users can modify
+ * existing vendor information. It fetches the current vendor data and provides a form
+ * interface for updating vendor details including name, bank information, and address.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -7,17 +14,38 @@ import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FiSave, FiArrowLeft } from 'react-icons/fi';
 
+/**
+ * @interface FormData
+ * @description Interface defining the structure of vendor form data
+ */
 interface FormData {
+  /** The name of the vendor */
   vendorName: string;
+  /** The vendor's bank account number */
   bankAccountNo: string;
+  /** The name of the vendor's bank */
   bankName: string;
+  /** Primary address line */
   addressLine1: string;
+  /** Secondary address line (optional) */
   addressLine2: string;
+  /** City name */
   city: string;
+  /** Country name */
   country: string;
+  /** Postal/ZIP code */
   zipCode: string;
 }
 
+/**
+ * @component EditVendorPage
+ * @description A React component that renders a form for editing existing vendors.
+ * It fetches the vendor's current data, allows modifications, and handles form submission.
+ * @param {Object} props - Component props
+ * @param {Object} props.params - URL parameters
+ * @param {string} props.params.id - The ID of the vendor being edited
+ * @returns {JSX.Element} The rendered edit vendor form page
+ */
 export default function EditVendorPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { id } = React.use(params);
@@ -68,6 +96,11 @@ export default function EditVendorPage({ params }: { params: { id: string } }) {
     fetchVendor();
   }, [id, router]);
 
+  /**
+   * @function handleChange
+   * @description Handles input field changes and updates the form state
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} e - The change event object
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -76,6 +109,12 @@ export default function EditVendorPage({ params }: { params: { id: string } }) {
     }));
   };
 
+  /**
+   * @function handleSubmit
+   * @description Handles form submission, validates required fields, and sends updated data to the API
+   * @param {React.FormEvent} e - The form submission event
+   * @async
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     

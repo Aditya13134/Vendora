@@ -2,7 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Vendor from '@/models/Vendor';
 
-// GET a single vendor by ID
+/**
+ * Retrieves a single vendor by ID
+ * @param {NextRequest} request - The incoming HTTP request
+ * @param {Object} params - Route parameters
+ * @param {string} params.id - Vendor ID
+ * @returns {Promise<NextResponse>} JSON response with vendor data or error
+ */
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     await connectToDatabase();
@@ -20,7 +26,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-// PUT update a vendor
+/**
+ * Updates a vendor by ID
+ * @param {NextRequest} request - The incoming HTTP request with updated vendor data
+ * @param {Object} params - Route parameters
+ * @param {string} params.id - Vendor ID
+ * @returns {Promise<NextResponse>} JSON response with updated vendor or error
+ */
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     await connectToDatabase();
@@ -52,7 +64,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-// DELETE a vendor
+/**
+ * Deletes a vendor by ID
+ * @param {NextRequest} request - The incoming HTTP request
+ * @param {Object} params - Route parameters
+ * @param {string} params.id - Vendor ID
+ * @returns {Promise<NextResponse>} JSON response with success message or error
+ */
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     await connectToDatabase();

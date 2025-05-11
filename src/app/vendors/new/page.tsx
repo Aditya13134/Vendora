@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * @fileoverview New Vendor Page Component
+ * This file contains the implementation of the New Vendor page where users can add
+ * new vendors to the system. It provides a form interface for entering vendor details
+ * including name, bank information, and address.
+ */
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -7,17 +14,36 @@ import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FiSave, FiArrowLeft } from 'react-icons/fi';
 
+/**
+ * @interface FormData
+ * @description Interface defining the structure of vendor form data
+ */
 interface FormData {
+  /** The name of the vendor */
   vendorName: string;
+  /** The vendor's bank account number */
   bankAccountNo: string;
+  /** The name of the vendor's bank */
   bankName: string;
+  /** Primary address line */
   addressLine1: string;
+  /** Secondary address line (optional) */
   addressLine2: string;
+  /** City name */
   city: string;
+  /** Country name */
   country: string;
+  /** Postal/ZIP code */
   zipCode: string;
 }
 
+/**
+ * @component NewVendorPage
+ * @description A React component that renders a form for creating new vendors.
+ * The form includes fields for vendor details, bank information, and address.
+ * It handles form submission, validation, and displays success/error messages.
+ * @returns {JSX.Element} The rendered new vendor form page
+ */
 export default function NewVendorPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,6 +58,11 @@ export default function NewVendorPage() {
     zipCode: ''
   });
 
+  /**
+   * @function handleChange
+   * @description Handles input field changes and updates the form state
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} e - The change event object
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -40,6 +71,12 @@ export default function NewVendorPage() {
     }));
   };
 
+  /**
+   * @function handleSubmit
+   * @description Handles form submission, validates required fields, and sends data to the API
+   * @param {React.FormEvent} e - The form submission event
+   * @async
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
