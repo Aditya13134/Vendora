@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { FcGoogle } from 'react-icons/fc';
@@ -11,7 +11,15 @@ export default function SignIn() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const { status } = useSession();
   const callbackUrl = searchParams.get('callbackUrl') || '/vendors';
+
+  useEffect(() => {
+    // Redirect if already authenticated
+    if (status === 'authenticated') {
+      router.push(callbackUrl);
+    }
+  }, [status, router, callbackUrl]);
 
   useEffect(() => {
     const error = searchParams.get('error');

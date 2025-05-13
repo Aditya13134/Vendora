@@ -1,13 +1,12 @@
 import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
 
-/**
- * Authentication middleware that protects routes
- * Wraps the middleware function with NextAuth's withAuth HOC
- * @see https://next-auth.js.org/configuration/nextjs#middleware
- */
 export default withAuth(
   function middleware(req) {
+    // Check if user is authenticated and trying to access signin page
+    if (req.nextUrl.pathname.startsWith('/auth/signin') && req.nextauth.token) {
+      return NextResponse.redirect(new URL('/vendors', req.url));
+    }
     return NextResponse.next();
   },
   {
@@ -20,14 +19,11 @@ export default withAuth(
   }
 );
 
-/**
- * Route matcher configuration for the middleware
- * Specifies which routes should be protected by authentication
- */
 export const config = {
   matcher: [
     '/vendors',
     '/vendors/new',
-    '/vendors/edit/:path*'
+    '/vendors/edit/:path*',
+    '/auth/signin'  // Add signin page to matcher
   ]
 };
